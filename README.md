@@ -156,5 +156,5 @@ Copyright © 2025 Vetri Jobs. All rights reserved.
 ## Support
 
 For questions or support, please contact:
-- Email: contact@vetrijobs.com
-- Website: https://vetri-jobs.netlify.app
+- Email: sudhayan2@gmail.com
+- Website: https://vetrijobs.online
