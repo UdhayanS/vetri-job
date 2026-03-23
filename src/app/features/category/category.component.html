@@ -1,0 +1,60 @@
+<div class="category-page">
+  <app-loader *ngIf="loading"></app-loader>
+  
+  <ng-container *ngIf="!loading">
+  <section class="hero">
+    <div class="hero-shapes">
+      <div class="hero-shape"></div>
+      <div class="hero-shape"></div>
+    </div>
+    <div class="container">
+      <div class="hero-badge" *ngIf="categoryJobs.length > 0">
+        <span class="count">{{ categoryJobs.length }}</span> Jobs Available
+      </div>
+      <h1>{{ categoryName }} <span class="highlight">Jobs</span></h1>
+      <p>Explore the latest opportunities in {{ categoryName }} and take the next step in your career</p>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="breadcrumb">
+      <a routerLink="/">Home</a>
+      <span>/</span>
+      <a routerLink="/jobs">Jobs</a>
+      <span>/</span>
+      <span>{{ categoryName }}</span>
+    </div>
+
+    <div class="jobs-grid" *ngIf="categoryJobs.length > 0; else noJobs">
+      <app-job-card 
+        *ngFor="let job of categoryJobs; trackBy: trackByFn"
+        [job]="job">
+      </app-job-card>
+    </div>
+
+    <ng-template #noJobs>
+      <div class="no-jobs">
+        <div class="no-jobs-icon">📋</div>
+        <h3>No jobs found in {{ categoryName }}</h3>
+        <p>We're constantly adding new opportunities. Check back soon!</p>
+        <a routerLink="/jobs" class="back-btn">Browse All Jobs</a>
+      </div>
+    </ng-template>
+  </div>
+
+  <section class="all-categories" *ngIf="categoryJobs.length > 0">
+    <div class="container">
+      <h2>Explore Other Categories</h2>
+      <div class="categories-list">
+        <a *ngFor="let cat of otherCategories" 
+           [routerLink]="['/category', cat.name]" 
+           class="category-link">
+          <span class="cat-icon">{{ cat.icon }}</span>
+          <span class="cat-name">{{ cat.name }}</span>
+          <span class="cat-count">{{ cat.count }} jobs</span>
+        </a>
+      </div>
+    </div>
+  </section>
+  </ng-container>
+</div>

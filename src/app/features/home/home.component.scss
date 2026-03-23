@@ -1,0 +1,63 @@
+.hero-section {
+  background: linear-gradient(90deg, var(--bg-gradient-start), var(--bg-gradient-end));
+  color: #fff;
+  padding: 4rem 0 2rem 0;
+  .hero-content {
+    text-align: center;
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      .highlight {
+        color: var(--primary-light);
+      }
+    }
+    p {
+      font-size: 1.2rem;
+      color: var(--gray-200);
+      margin-bottom: 2rem;
+    }
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      .btn {
+        font-size: 1.1rem;
+        padding: 0.7rem 1.5rem;
+        border-radius: var(--radius);
+        font-weight: 600;
+      }
+      .btn-primary {
+        background: var(--primary);
+        color: #fff;
+      }
+      .btn-secondary {
+        background: var(--accent);
+        color: #fff;
+      }
+      .btn-coffee {
+        background: var(--success);
+        color: #fff;
+      }
+    }
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      font-size: 1.1rem;
+      color: var(--gray-200);
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+  }
+}
+.recent-jobs, .job-categories {
+  background: var(--bg-secondary);
+  padding: 2rem 0;
+  h2 {
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+}

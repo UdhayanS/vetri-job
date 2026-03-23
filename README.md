@@ -1,27 +1,160 @@
-# VetriJobs
+# Vetri Jobs - Job Portal Web Application
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.16.
+A modern, enterprise-level job portal built with Angular and powered by Google Apps Script as a backend API.
 
-## Development server
+## Features
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- **Modern UI**: Beautiful, responsive design with gradient backgrounds and card-based layouts
+- **Lazy Loading**: All feature modules are lazy loaded for optimal performance
+- **SEO Optimized**: Dynamic meta tags, slug-based URLs, proper heading structure
+- **AdSense Ready**: Pre-configured ad spaces throughout the application
+- **Fast Loading**: OnPush change detection, shareReplay caching, optimized bundles
+- **Google Sheets Backend**: Easy to manage job listings through Google Sheets
 
-## Code scaffolding
+## Architecture
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```
+src/
+├── app/
+│   ├── core/                    # Core services and interceptors
+│   │   ├── models/              # TypeScript interfaces
+│   │   ├── services/            # BaseApiService, JobService, UtilityService
+│   │   └── interceptors/        # Error handling interceptor
+│   ├── shared/                  # Shared components
+│   │   └── components/
+│   │       ├── header/          # Sticky navigation header
+│   │       ├── footer/          # Footer with legal links
+│   │       ├── job-card/        # Reusable job listing card
+│   │       ├── loader/          # Loading spinner
+│   │       └── search-bar/      # Job search component
+│   └── features/                # Feature modules (lazy loaded)
+│       ├── home/               # Home page
+│       ├── jobs/               # Job listing page with filters
+│       ├── job-detail/         # Individual job details
+│       ├── category/           # Category-based job listing
+│       └── pages/              # Static pages (About, Contact, etc.)
+├── environments/               # Environment configurations
+└── public/                     # Static assets (Netlify _redirects)
+```
 
-## Build
+## Services
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### BaseApiService
+Handles all HTTP requests (GET/POST) to the Google Apps Script API.
 
-## Running unit tests
+### JobService
+- `getAllJobs()` - Fetch all jobs with caching
+- `getJobBySlug(slug)` - Get job details by slug
+- `getJobsByCategory(category)` - Filter jobs by category
+- `searchJobs(query)` - Search across multiple fields
+- `getFeaturedJobs()` - Get featured job listings
+- `getLatestJobs(limit)` - Get recently posted jobs
+- `incrementViews(slug)` - Track job views
+- `subscribeEmail(email)` - Email subscription
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### UtilityService
+- `generateWhatsAppShareText(job)` - Create shareable job text
+- `formatDate()` - Date formatting and relative time
+- Various helper methods for text processing
 
-## Running end-to-end tests
+## API Configuration
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Update the API URLs in:
+- `src/environments/environment.ts` (development)
+- `src/environments/environment.prod.ts` (production)
 
-## Further help
+### Google Apps Script Endpoints
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+**GET Parameters:**
+- `action=getJobs` - Fetch all jobs
+
+**POST Data:**
+- `{ slug: 'job-slug' }` - Increment views
+- `{ email: 'user@email.com', source: 'website' }` - Subscribe
+
+## Google Sheet Model
+
+Required columns:
+```
+id, slug, title, company, companyLogo, role, category, location, jobType, workMode, experience, qualification, batch, salary, applyLink, lastDate, postedDate, status, description, responsibilities, skills, selectionProcess, benefits, aboutCompany, tags, seoTitle, seoDescription, canonicalUrl, views, priority, featured
+```
+
+## Routes
+
+- `/` - Home page
+- `/jobs` - Job listing with filters
+- `/jobs/:slug` - Job detail page
+- `/category/:name` - Category job listing
+- `/about` - About page
+- `/contact` - Contact page
+- `/privacy-policy` - Privacy policy
+- `/terms` - Terms of service
+- `/disclaimer` - Disclaimer
+- `/sitemap` - Sitemap
+- `**` - 404 Not Found
+
+## Development
+
+```bash
+# Install dependencies
+npm install
+
+# Run development server
+npm start
+
+# Build for production
+npm run build
+
+# Build with specific environment
+ng build --configuration=production
+```
+
+## Deployment
+
+### Netlify (Recommended)
+
+1. Build the project: `npm run build`
+2. Deploy the `dist/vetri-jobs` folder to Netlify
+3. The `_redirects` file is already configured for SPA routing
+
+### Other Platforms
+
+Ensure the server configuration redirects all routes to `index.html` for Angular routing.
+
+## AdSense Integration
+
+Pre-configured ad spaces:
+- Top banner (full width)
+- Sidebar ads (desktop only)
+- In-content ad blocks
+- Bottom banner
+
+To enable AdSense:
+1. Add your AdSense script to `src/index.html`
+2. Replace placeholder divs with actual ad units
+3. Ensure ads don't interfere with user experience
+
+## Performance Optimizations
+
+- **OnPush Change Detection**: Reduces unnecessary change detection cycles
+- **TrackBy Functions**: Optimized ngFor loops
+- **Lazy Loading**: Feature modules loaded on demand
+- **shareReplay**: API response caching
+- **Production Build**: Optimized bundles with tree shaking
+
+## Browser Support
+
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
+
+## License
+
+Copyright © 2025 Vetri Jobs. All rights reserved.
+
+## Support
+
+For questions or support, please contact:
+- Email: contact@vetrijobs.com
+- Website: https://vetri-jobs.netlify.app

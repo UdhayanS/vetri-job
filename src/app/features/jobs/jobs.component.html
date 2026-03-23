@@ -1,0 +1,137 @@
+<div class="jobs-page">
+  <div class="page-header">
+    <div class="header-bubbles">
+      <div class="bubble bubble-1"></div>
+      <div class="bubble bubble-2"></div>
+      <div class="bubble bubble-3"></div>
+    </div>
+    <div class="header-bg"></div>
+    <div class="container">
+      <h1>Discover Your Dream Career</h1>
+      <p>"The secret of getting ahead is getting started." - Mark Twain</p>
+      <app-search-bar (search)="onSearch($event)"></app-search-bar>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="jobs-layout">
+      <aside class="filters-sidebar">
+        <div class="filters-header">
+          <h3>Filters</h3>
+          <button class="reset-btn" (click)="resetFilters()">Reset</button>
+        </div>
+
+        <div class="filter-section">
+          <label>Category</label>
+          <select [formControl]="categoryControl" class="filter-select">
+            <option value="">All Categories</option>
+            <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+          </select>
+        </div>
+
+        <div class="filter-section">
+          <label>Location</label>
+          <select [formControl]="locationControl" class="filter-select">
+            <option value="">All Locations</option>
+            <option *ngFor="let loc of locations" [value]="loc">{{ loc }}</option>
+          </select>
+        </div>
+
+        <div class="filter-section">
+          <label>Experience</label>
+          <select [formControl]="experienceControl" class="filter-select">
+            <option value="">Any</option>
+            <option *ngFor="let exp of experienceLevels" [value]="exp">{{ exp }}</option>
+          </select>
+        </div>
+      </aside>
+
+      <div class="results-section">
+        <app-loader *ngIf="loading"></app-loader>
+        
+        <ng-container *ngIf="!loading">
+        <div class="results-header">
+          <span class="results-count"><strong>{{ filteredJobs.length }}</strong> jobs</span>
+          <select [formControl]="sortControl" class="sort-select">
+            <option value="latest">Latest</option>
+          </select>
+        </div>
+
+        <div class="jobs-grid" *ngIf="filteredJobs.length > 0; else noJobs">
+          <app-job-card 
+            *ngFor="let job of paginatedJobs; trackBy: trackByFn"
+            [job]="job">
+          </app-job-card>
+        </div>
+
+        <div class="pagination" *ngIf="totalPages > 1">
+          <button class="page-btn" [disabled]="currentPage === 1" (click)="prevPage()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M15 18l-6-6 6-6"/>
+            </svg>
+          </button>
+          <button 
+            *ngFor="let page of pageNumbers" 
+            class="page-btn"
+            [class.active]="page === currentPage"
+            (click)="goToPage(page)">
+            {{ page }}
+          </button>
+          <button class="page-btn" [disabled]="currentPage === totalPages" (click)="nextPage()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
+          </button>
+        </div>
+
+        <ng-template #noJobs>
+          <div class="no-results">
+            <div class="no-results-icon">
+              <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="11" cy="11" r="8"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                <line x1="8" y1="8" x2="14" y2="14"/>
+                <line x1="14" y1="8" x2="8" y2="14"/>
+              </svg>
+            </div>
+            <h3>No Jobs Found</h3>
+            <p>We couldn't find any jobs matching your criteria. Try adjusting your filters or search terms.</p>
+            <div class="no-results-suggestions">
+              <span class="suggestion-label">Try searching for:</span>
+              <div class="suggestion-tags">
+                <button class="suggestion-tag" (click)="onSearch('Developer')">Developer</button>
+                <button class="suggestion-tag" (click)="onSearch('Designer')">Designer</button>
+                <button class="suggestion-tag" (click)="onSearch('Manager')">Manager</button>
+                <button class="suggestion-tag" (click)="onSearch('Remote')">Remote</button>
+              </div>
+            </div>
+            <button class="clear-btn" (click)="resetFilters()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+              </svg>
+              Clear All Filters
+            </button>
+          </div>
+        </ng-template>
+        </ng-container>
+      </div>
+
+      <aside class="jobs-sidebar">
+        <div class="sidebar-section">
+          <h3>Latest Jobs</h3>
+          <div class="latest-jobs-list">
+            <a *ngFor="let job of latestJobs" [routerLink]="['/jobs', job.slug]" class="latest-job-item">
+              <span class="latest-job-company">{{ job.company }}</span>
+              <span class="latest-job-title">{{ job.title }}</span>
+              <span class="latest-job-date">{{ job.postedDate | date:'mediumDate' }}</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <a routerLink="/categories" class="sidebar-link">Browse Categories</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>

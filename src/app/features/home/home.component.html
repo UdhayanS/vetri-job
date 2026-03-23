@@ -1,0 +1,156 @@
+<div class="home-page">
+  <app-loader *ngIf="loading"></app-loader>
+  
+  <ng-container *ngIf="!loading">
+  <section class="hero">
+    <div class="hero-shapes">
+      <div class="hero-shape"></div>
+      <div class="hero-shape"></div>
+      <div class="hero-shape"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-badge">500+ Jobs Available Today</div>
+      <h1>Find Your Dream Job<br><span class="highlight">in Vetri Jobs</span></h1>
+      <p class="hero-subtitle">Connect with top employers and discover thousands of opportunities tailored for your skills and career goals.</p>
+      
+      <div class="hero-search">
+        <app-search-bar (search)="onSearch($event)"></app-search-bar>
+      </div>
+      
+      <div class="trending">
+        <span class="trending-label">Trending:</span>
+        <div class="trending-tags">
+          <span class="trending-tag" *ngFor="let tag of trendingTags" (click)="onSearch(tag)">{{ tag }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats-section">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">💼</div>
+          <div class="stat-info">
+            <div class="stat-number">10,000+</div>
+            <div class="stat-label">Active Jobs</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">👥</div>
+          <div class="stat-info">
+            <div class="stat-number">50,000+</div>
+            <div class="stat-label">Job Seekers</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🏢</div>
+          <div class="stat-info">
+            <div class="stat-number">5,000+</div>
+            <div class="stat-label">Companies</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🎯</div>
+          <div class="stat-info">
+            <div class="stat-number">98%</div>
+            <div class="stat-label">Success Rate</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="recent-jobs">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-title">
+          <span class="new-badge">New</span>
+          <h2>Recent Jobs</h2>
+          <p class="section-subtitle">Fresh opportunities added daily</p>
+        </div>
+        <a routerLink="/jobs" class="view-all">
+          View All Jobs
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+      
+      <div class="jobs-grid">
+        <app-job-card 
+          *ngFor="let job of latestJobs; trackBy: trackByFn"
+          [job]="job">
+        </app-job-card>
+      </div>
+    </div>
+  </section>
+
+  <section class="featured-jobs" *ngIf="featuredJobs.length > 0">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-title">
+          <span class="featured-badge">⭐ Featured</span>
+          <h2>Featured Jobs</h2>
+        </div>
+      </div>
+      
+      <div class="jobs-grid">
+        <app-job-card 
+          *ngFor="let job of featuredJobs; trackBy: trackByFn"
+          [job]="job">
+        </app-job-card>
+      </div>
+    </div>
+  </section>
+
+  <section class="categories-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Browse Job Categories</h2>
+        <p class="section-subtitle">Explore opportunities across diverse industries</p>
+      </div>
+      
+      <div class="categories-grid">
+        <a 
+          *ngFor="let category of categories; trackBy: trackByFn"
+          [routerLink]="['/category', category.name]"
+          class="category-card">
+          <div class="category-icon">{{ category.icon }}</div>
+          <div class="category-info">
+            <h3>{{ category.name }}</h3>
+            <p>{{ category.count }} jobs</p>
+          </div>
+        </a>
+      </div>
+      
+      <div class="explore-all">
+        <a routerLink="/categories" class="btn btn-outline">
+          Explore All Categories
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <div class="cta-icon">🚀</div>
+        <h2>Ready to Take the Next Step?</h2>
+        <p>Create your free account today and get personalized job recommendations, instant alerts, and direct application tracking.</p>
+        <div class="cta-buttons">
+          <a routerLink="/jobs" class="btn btn-primary btn-large">
+            Browse Jobs
+          </a>
+          <a routerLink="/contact" class="btn btn-outline btn-large">
+            Contact Us
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  </ng-container>
+</div>

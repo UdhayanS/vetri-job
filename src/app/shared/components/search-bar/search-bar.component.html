@@ -1,0 +1,17 @@
+<div class="search-bar">
+  <div class="search-icon">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="11" cy="11" r="8"/>
+      <path d="m21 21-4.35-4.35"/>
+    </svg>
+  </div>
+  <input 
+    type="text" 
+    [(ngModel)]="searchValue"
+    placeholder="Search jobs, companies, or skills..."
+    class="search-input"
+    (keyup.enter)="onSearch()">
+  <button type="button" class="search-btn" (click)="onSearch()">
+    Search Jobs
+  </button>
+</div>

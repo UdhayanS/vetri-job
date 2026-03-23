@@ -1,0 +1,81 @@
+<footer class="footer">
+  <div class="footer-main">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>Vetri Jobs</h3>
+          <p class="brand-tagline">Connecting talent with opportunities. Your trusted job portal for finding the perfect career path in India and beyond.</p>
+        </div>
+        
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a routerLink="/">Home</a></li>
+            <li><a routerLink="/jobs">Jobs</a></li>
+            <li><a routerLink="/categories">Categories</a></li>
+            <li><a routerLink="/about">About Us</a></li>
+            <li><a routerLink="/contact">Contact Us</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h4>Job Categories</h4>
+          <ul>
+            <li><a routerLink="/category/IT">IT & Software</a></li>
+            <li><a routerLink="/category/Marketing">Marketing</a></li>
+            <li><a routerLink="/category/Sales">Sales</a></li>
+            <li><a routerLink="/category/Finance">Finance</a></li>
+            <li><a routerLink="/category/Healthcare">Healthcare</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h4>Legal</h4>
+          <ul>
+            <li><a routerLink="/privacy-policy">Privacy Policy</a></li>
+            <li><a routerLink="/terms">Terms & Conditions</a></li>
+            <li><a routerLink="/disclaimer">Disclaimer</a></li>
+            <li><a routerLink="/sitemap">Sitemap</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section newsletter">
+          <h4>📬 Job Alerts</h4>
+          <p>Subscribe to get job notifications delivered to your email.</p>
+          <form class="newsletter-form" (ngSubmit)="subscribe()">
+            <div class="input-wrapper">
+              <input 
+                type="email" 
+                [formControl]="emailControl"
+                placeholder="Enter your email address"
+                class="email-input"
+                required>
+              <button type="submit" class="subscribe-btn" [disabled]="!emailControl.valid || subscribing">
+                <span *ngIf="!subscribing">Subscribe</span>
+                <span *ngIf="subscribing">...</span>
+              </button>
+            </div>
+            <div class="success-message" *ngIf="successMessage">
+              ✓ {{ successMessage }}
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="footer-bottom">
+    <div class="container">
+      <div class="bottom-content">
+        <div class="copyright">
+          <p>&copy; {{ currentYear }} Vetri Jobs. All rights reserved.</p>
+        </div>
+        <div class="quote-mini">
+          <blockquote>"Success is not final; failure is not fatal: it is the courage to continue that counts."</blockquote>
+          <cite>— Winston Churchill</cite>
+        </div>
+        <p class="tagline">Empowering Careers, Enriching Lives</p>
+      </div>
+    </div>
+  </div>
+</footer>

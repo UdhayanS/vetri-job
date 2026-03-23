@@ -1,0 +1,60 @@
+.main-footer {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  padding: 2rem 0 1rem 0;
+  .container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 2rem;
+    align-items: flex-start;
+  }
+  h4 {
+    color: var(--primary-light);
+    margin-bottom: 0.5rem;
+  }
+  a {
+    color: var(--text-secondary);
+    display: block;
+    margin-bottom: 0.3rem;
+    text-decoration: none;
+    &:hover {
+      color: var(--primary);
+    }
+  }
+  .footer-socials a {
+    font-size: 1.3rem;
+    margin-right: 0.5rem;
+  }
+  form {
+    display: flex;
+    gap: 0.5rem;
+    input {
+      background: var(--bg-primary);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      padding: 0.4rem 0.8rem;
+      font-size: 1rem;
+      color: var(--text-primary);
+    }
+    button {
+      background: var(--primary);
+      color: #fff;
+      border-radius: var(--radius-sm);
+      padding: 0.4rem 1rem;
+      border: none;
+      cursor: pointer;
+    }
+  }
+  blockquote {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-top: 1rem;
+    font-style: italic;
+  }
+  .footer-bottom {
+    text-align: center;
+    margin-top: 2rem;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+  }
+}

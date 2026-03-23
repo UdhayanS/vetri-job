@@ -1,0 +1,67 @@
+<div class="categories-page">
+  <section class="hero">
+    <div class="hero-shapes">
+      <div class="hero-shape"></div>
+      <div class="hero-shape"></div>
+      <div class="hero-shape"></div>
+    </div>
+    <div class="container">
+      <div class="hero-badge">
+        <span class="icon">🎯</span>
+        Explore Career Paths
+      </div>
+      <h1>Browse Job <span class="highlight">Categories</span></h1>
+      <p>Discover opportunities across diverse industries and find your perfect career path</p>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="breadcrumb">
+      <a routerLink="/">Home</a>
+      <span>/</span>
+      <span>Categories</span>
+    </div>
+
+    <div class="categories-grid" *ngIf="categories.length > 0; else noCategories">
+      <a *ngFor="let cat of categories; trackBy: trackByFn" 
+         [routerLink]="['/category', cat.name]" 
+         class="category-card">
+        <div class="category-icon-wrapper">
+          <span class="category-icon">{{ cat.icon }}</span>
+        </div>
+        <div class="category-info">
+          <h3>{{ cat.name }}</h3>
+          <p>{{ cat.count }} jobs available</p>
+        </div>
+        <div class="category-arrow">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </div>
+      </a>
+    </div>
+
+    <ng-template #noCategories>
+      <div class="loading-categories">
+        <div class="loading-spinner"></div>
+        <p>Loading categories...</p>
+      </div>
+    </ng-template>
+  </div>
+
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <div class="cta-icon">💼</div>
+        <h2>Can't Find What You're Looking For?</h2>
+        <p>Browse all available jobs and discover opportunities that match your skills</p>
+        <a routerLink="/jobs" class="btn btn-primary btn-large">
+          Browse All Jobs
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+</div>

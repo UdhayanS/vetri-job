@@ -1,0 +1,26 @@
+<header class="header">
+  <nav class="nav-container">
+    <a routerLink="/" class="logo">
+      <img src="assets/images/vetrijobs-logo.png" alt="Vetri Jobs" class="logo-img">
+    </a>
+    
+    <div class="nav-links" [class.mobile-open]="mobileMenuOpen">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="closeMobileMenu()">Home</a>
+      <a routerLink="/jobs" routerLinkActive="active" (click)="closeMobileMenu()">Jobs</a>
+      <a routerLink="/categories" routerLinkActive="active" (click)="closeMobileMenu()">Categories</a>
+      <a routerLink="/about" routerLinkActive="active" (click)="closeMobileMenu()">About</a>
+      <a routerLink="/contact" routerLinkActive="active" (click)="closeMobileMenu()">Contact</a>
+    </div>
+    
+    <div class="nav-actions">
+      <button class="theme-toggle" (click)="toggleTheme()" [attr.aria-label]="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'">
+        <span class="theme-icon" [class.dark]="isDarkMode">☀️</span>
+        <span class="theme-icon" [class.light]="!isDarkMode">🌙</span>
+      </button>
+      
+      <button class="mobile-menu-btn" (click)="toggleMobileMenu()">
+        <span [class.open]="mobileMenuOpen">☰</span>
+      </button>
+    </div>
+  </nav>
+</header>
