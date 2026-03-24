@@ -2,8 +2,10 @@ import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@
 import { ActivatedRoute } from '@angular/router';
 import { Meta, Title } from '@angular/platform-browser';
 import { JobService } from '../../core/services/job.service';
+import { BlogService } from '../../core/services/blog.service';
 import { UtilityService } from '../../core/services/utility.service';
 import { Job } from '../../core/models/job.model';
+import { Blog } from '../../core/models/blog.model';
 
 @Component({
   selector: 'app-job-detail',
@@ -169,6 +171,43 @@ import { Job } from '../../core/models/job.model';
           </div>
         </div>
       </section>
+
+      <section class="recent-blogs-section" *ngIf="recentBlogs.length > 0">
+        <div class="container">
+          <div class="section-header">
+            <div class="section-title">
+              <span class="blog-badge">📝 Latest</span>
+              <h2>Recent Blogs</h2>
+            </div>
+            <a routerLink="/blogs" class="view-all">
+              View All Blogs
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+          
+          <div class="blogs-grid">
+            <article class="blog-card" *ngFor="let blog of recentBlogs; trackBy: trackByBlogFn">
+              <a [routerLink]="['/blogs', blog.slug]" class="card-image">
+                <img [src]="blog.featuredImage || 'https://placehold.co/600x400?text=Blog'" [alt]="blog.title" onerror="this.src='https://placehold.co/600x400?text=Blog'">
+              </a>
+              <div class="card-content">
+                <div class="card-meta">
+                  <span class="author">{{ blog.author }}</span>
+                  <span class="date">{{ formatDate(blog.createdAt) }}</span>
+                </div>
+                <h3 class="card-title">
+                  <a [routerLink]="['/blog', blog.slug]">{{ blog.title }}</a>
+                </h3>
+                <div class="card-tags" *ngIf="blog.tags">
+                  <span class="tag" *ngFor="let tag of parseTags(blog.tags)">{{ tag }}</span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
     </div>
 
     <ng-template #notFound>
@@ -211,7 +250,7 @@ import { Job } from '../../core/models/job.model';
         <p>If this job helped you land your dream role, consider buying me a coffee! It keeps Vetri Jobs free & running. 🙏</p>
         <div class="popup-buttons">
           <button class="popup-btn next-time" (click)="proceedToApply()">
-            Next Time 👋
+            Next Time 👋 Apply Now
           </button>
           <button class="popup-btn buy-coffee" (click)="buyMeCoffee()">
             ☕ Buy Me a Coffee
@@ -740,6 +779,114 @@ import { Job } from '../../core/models/job.model';
       gap: 1.5rem;
     }
     
+    .recent-blogs-section {
+      padding: 4rem 0;
+      background: var(--bg-primary);
+      margin-top: 2rem;
+    }
+    
+    .blog-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.375rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      width: fit-content;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: white;
+    }
+    
+    .blogs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    
+    .blog-card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+    }
+    
+    .blog-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-glow);
+    }
+    
+    .blog-card .card-image {
+      display: block;
+      height: 180px;
+      overflow: hidden;
+    }
+    
+    .blog-card .card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    
+    .blog-card:hover .card-image img {
+      transform: scale(1.05);
+    }
+    
+    .blog-card .card-content {
+      padding: 1.25rem;
+    }
+    
+    .blog-card .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+    }
+    
+    .blog-card .card-meta .author {
+      font-weight: 600;
+      color: var(--primary);
+    }
+    
+    .blog-card .card-title {
+      font-size: 1.0625rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0 0 0.75rem 0;
+      line-height: 1.4;
+    }
+    
+    .blog-card .card-title a {
+      color: var(--text-primary);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    
+    .blog-card .card-title a:hover {
+      color: var(--primary);
+    }
+    
+    .blog-card .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.375rem;
+    }
+    
+    .blog-card .tag {
+      padding: 0.25rem 0.5rem;
+      background: var(--bg-secondary);
+      border-radius: var(--radius);
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+    
     .popup-overlay {
       position: fixed;
       top: 0;
@@ -1019,6 +1166,19 @@ import { Job } from '../../core/models/job.model';
         gap: 1rem;
       }
       
+      .recent-blogs-section {
+        padding: 2rem 0;
+      }
+      
+      .blogs-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      
+      .blog-card .card-image {
+        height: 160px;
+      }
+      
       .popup-content {
         padding: 1.5rem;
         margin: 1rem;
@@ -1041,6 +1201,7 @@ import { Job } from '../../core/models/job.model';
 export class JobDetailComponent implements OnInit {
   job: Job | null = null;
   featuredJobs: Job[] = [];
+  recentBlogs: Blog[] = [];
   loading = true;
   showApplyPopup = false;
   pendingApplyLink = '';
@@ -1048,6 +1209,7 @@ export class JobDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private jobService: JobService,
+    private blogService: BlogService,
     public utilityService: UtilityService,
     private meta: Meta,
     private title: Title,
@@ -1063,6 +1225,7 @@ export class JobDetailComponent implements OnInit {
     });
     
     this.loadFeaturedJobs();
+    this.loadRecentBlogs();
   }
 
   loadJob(slug: string): void {
@@ -1100,6 +1263,26 @@ export class JobDetailComponent implements OnInit {
       this.featuredJobs = jobs.filter(j => j.slug !== this.job?.slug).slice(0, 3);
       this.cdr.markForCheck();
     });
+  }
+
+  loadRecentBlogs(): void {
+    this.blogService.getLatestBlogs(3).subscribe(blogs => {
+      this.recentBlogs = blogs;
+      this.cdr.markForCheck();
+    });
+  }
+
+  formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
+  }
+
+  parseTags(tags: string): string[] {
+    return tags.split(',').map(tag => tag.trim()).slice(0, 3);
+  }
+
+  trackByBlogFn(index: number, item: Blog): string {
+    return item.slug || index.toString();
   }
 
   parseList(text: string): string[] {

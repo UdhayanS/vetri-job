@@ -21,11 +21,9 @@
         <div class="footer-section">
           <h4>Job Categories</h4>
           <ul>
-            <li><a routerLink="/category/IT">IT & Software</a></li>
-            <li><a routerLink="/category/Marketing">Marketing</a></li>
-            <li><a routerLink="/category/Sales">Sales</a></li>
-            <li><a routerLink="/category/Finance">Finance</a></li>
-            <li><a routerLink="/category/Healthcare">Healthcare</a></li>
+            <li *ngFor="let category of categories">
+              <a [routerLink]="['/category', category]">{{ category }}</a>
+            </li>
           </ul>
         </div>
         

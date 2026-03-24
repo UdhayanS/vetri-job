@@ -64,4 +64,19 @@ export class UtilityService {
   generateCanonicalUrl(slug: string): string {
     return `https://vetrijobs.online/jobs/${slug}`;
   }
+
+  generateBlogCanonicalUrl(slug: string): string {
+    return `https://vetrijobs.online/blogs/${slug}`;
+  }
+
+  formatBlogDate(dateString: string): string {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    };
+    return date.toLocaleDateString('en-US', options);
+  }
 }

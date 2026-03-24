@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Meta, Title } from '@angular/platform-browser';
-import { JobService } from '../../core/services/job.service';
+import { JobService } from '../../../core/services/job.service';
 
 @Component({
   selector: 'app-contact',

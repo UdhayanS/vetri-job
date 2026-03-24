@@ -24,6 +24,10 @@ const routes: Routes = [
     loadChildren: () => import('./features/category/category.module').then(m => m.CategoryModule)
   },
   {
+    path: 'blogs',
+    loadChildren: () => import('./features/blogs/blogs.module').then(m => m.BlogsModule)
+  },
+  {
     path: 'about',
     loadChildren: () => import('./features/pages/pages.module').then(m => m.PagesModule),
     data: { page: 'about' }

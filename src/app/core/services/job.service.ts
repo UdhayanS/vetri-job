@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { BaseApiService } from './base-api.service';
-import { Job, ApiResponse, PostRequest } from '../models/job.model';
-import { environment } from '../../../environments/environment';
-
+import { Job, ApiResponse } from '../models/job.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +10,7 @@ import { environment } from '../../../environments/environment';
 export class JobService {
   private jobsCache$: Observable<Job[]> | null = null;
 
-  private apiUrl = environment.apiUrl;
-
-  constructor(private baseApi: BaseApiService, private http: HttpClient) {}
+  constructor(private baseApi: BaseApiService) {}
 
   getAllJobs(): Observable<Job[]> {
     if (!this.jobsCache$) {
@@ -75,24 +70,17 @@ export class JobService {
     );
   }
 
- incrementViews(slug: string): Observable<any> {
-  const data: PostRequest = { slug };
-  return this.http.post(this.apiUrl, data, {
-    headers: { 'Content-Type': 'text/plain' }
-  });
-}
-subscribeEmail(email: string): Observable<any> {
-  const body = JSON.stringify({ email, source: 'website' });
-  return this.http.post(this.apiUrl, body, {
-    headers: { 'Content-Type': 'text/plain' }
-  });
-}
-sendContactForm(formData: { name: string; email: string; subject: string; message: string }): Observable<any> {
-  const body = JSON.stringify(formData);
-  return this.http.post(this.apiUrl, body, {
-    headers: { 'Content-Type': 'text/plain' }
-  });
-}
+  incrementViews(slug: string): Observable<any> {
+    return this.baseApi.post({ slug });
+  }
+
+  subscribeEmail(email: string): Observable<any> {
+    return this.baseApi.post({ email, source: 'website' });
+  }
+
+  sendContactForm(formData: { name: string; email: string; subject: string; message: string }): Observable<any> {
+    return this.baseApi.post(formData);
+  }
 
   getCategories(): Observable<string[]> {
     return this.getAllJobs().pipe(
