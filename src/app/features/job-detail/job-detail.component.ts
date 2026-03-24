@@ -198,7 +198,7 @@ import { Blog } from '../../core/models/blog.model';
                   <span class="date">{{ formatDate(blog.createdAt) }}</span>
                 </div>
                 <h3 class="card-title">
-                  <a [routerLink]="['/blog', blog.slug]">{{ blog.title }}</a>
+                  <a [routerLink]="['/blogs', blog.slug]">{{ blog.title }}</a>
                 </h3>
                 <div class="card-tags" *ngIf="blog.tags">
                   <span class="tag" *ngFor="let tag of parseTags(blog.tags)">{{ tag }}</span>
