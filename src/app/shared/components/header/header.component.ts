@@ -9,6 +9,8 @@ import { ThemeService } from '../../../core/services/theme.service';
 export class HeaderComponent implements OnInit {
   mobileMenuOpen = false;
   isDarkMode = false;
+  qrModalOpen = false;
+  qrUrl = 'https://vetrijobs.online/jobs';
 
   constructor(private themeService: ThemeService) {}
 
@@ -28,5 +30,19 @@ export class HeaderComponent implements OnInit {
 
   closeMobileMenu(): void {
     this.mobileMenuOpen = false;
+  }
+
+  toggleQrModal(): void {
+    this.qrModalOpen = !this.qrModalOpen;
+  }
+
+  closeQrModal(): void {
+    this.qrModalOpen = false;
+  }
+
+  shareOnWhatsApp(): void {
+    const text = `Check out Vetri Jobs: ${this.qrUrl}`;
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
+    window.open(whatsappUrl, '_blank');
   }
 }

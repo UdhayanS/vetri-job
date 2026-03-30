@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { QRCodeModule } from 'angularx-qrcode';
 
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -21,13 +22,15 @@ import { SearchBarComponent } from './components/search-bar/search-bar.component
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    QRCodeModule
   ],
   exports: [
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
     FormsModule,
+    QRCodeModule,
     HeaderComponent,
     FooterComponent,
     JobCardComponent,
